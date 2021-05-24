@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+BASE_DIR=`dirname $0`
+
+echo 'calling preboot script'
+
+# erase old env variables
+unset APP_EXT_PARAM
+unset JVM_EXT_PARAM
+
+APP_EXT_PARAM=''
+JVM_EXT_PARAM=''
+
+# custom logic starts
+
+APP_EXT_PARAM=" $APP_EXT_PARAM "
+JVM_EXT_PARAM=" $JVM_EXT_PARAM "
+
+echo 'preboot done'
