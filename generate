@@ -1,0 +1,29 @@
+#!/bin/sh
+
+if [ "$1" == "" ]; then
+    echo "app name must not be empty\n"
+    echo "usage:"
+    echo "\tsh generate APPNAME"
+    exit
+fi
+
+PKGNAME=`echo $1 | sed "s/-//g"`
+
+cp -R /你的路径/demoserver $1
+
+echo "now generating new project withe name $1"
+rm -fr ./$1/.git
+rm -fr ./$1/core/src/main/resources/special
+rm -fr ./$1/*.iml
+rm -fr ./$1/client/*.iml
+rm -fr ./$1/core/*.iml
+mv ./$1/client/src/main/java/com/dougwang/demoserver ./$1/client/src/main/java/com/dougwang/$PKGNAME
+mv ./$1/core/src/main/java/com/dougwang/demoserver ./$1/core/src/main/java/com/dougwang/$PKGNAME
+
+find ./$1 -type f -name "*.java" -exec sed -i '' "s/dubbodemoserver/$PKGNAME/g" {} \;
+find ./$1 -type f -name "*.properties" -exec sed -i '' "s/dubbodemoserver/$1/g" {} \;
+find ./$1 -type f -name "app.xml" -exec sed -i '' "s/dubbodemoserver/$PKGNAME/g" {} \;
+find ./$1 -type f -name "pom.xml" -exec sed -i '' "s/dubbodemoserver/$1/g" {} \;
+find ./$1 -type f -name "assembly.xml" -exec sed -i '' "s/dubbodemoserver/$1/g" {} \;
+
+echo "all done! enjoy"
